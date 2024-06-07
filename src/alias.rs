@@ -63,8 +63,9 @@ impl Alias {
         Some(match lang {
             SupportedShells::Pwsh => {
                 format!(
-                    "function {} {{\n    \
-                        {}\n\
+                    "Remove-Alias {0} -ErrorAction SilentlyContinue -Force\n\
+                    function {0} {{\n    \
+                        {1}\n\
                     }}\n",
                     self.name,
                     get_param_pattern()
