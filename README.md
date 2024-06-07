@@ -3,7 +3,7 @@ Generate command alias for different shell
 # Usage:
 `gen-alias.exe <ALIAS FILE> <SHELL>`
 
-Where ALIAS FILE is the plain text file explained below.
+Where ALIAS FILE is the plain text file explained below.  
 
 Available shells:
 - pwsh
@@ -13,20 +13,20 @@ Available shells:
 # Integration
 
 ## Powershell
-Add below line in the profile (Get its location by `echo $profile`)
+Add below line in the profile (Get its location by `echo $profile`)  
 `Invoke-Expression (& { gen-alias <ALIAS FILE> pwsh | Out-String})`
 
 ## Bash
-Add below line in the profile, typically `~/.bashrc`
+Add below line in the profile, typically `~/.bashrc`  
 `eval "$(get-alias <ALIAS FILE> bash)"`
 
 # Fish
-Add below line in the profile, typically `~/.config/fish/config.fish`
+Add below line in the profile, typically `~/.config/fish/config.fish`  
 `gen-alias alias.txt fish | source`
 
 # Alias file
 A utf-8 encoded file contains multiple line of alias.  
-Each line has format like `<alias name>[:<supported shell 1>[,<supported shell 2>]=<commands>]`  
+Each line has format like `<alias name>[:<supported shell 1>[,<supported shell 2>[...]]]=<commands>`  
 Example:
 ```
 gclr=git checkout . && git clean -fd
