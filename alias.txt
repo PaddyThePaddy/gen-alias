@@ -10,5 +10,6 @@ gl=git pull
 gco=git checkout
 gsw=git switch
 gst=git status
-glg=git log
+glog=git log
+glg=git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %<(50)%s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 atest=echo $1 $0
