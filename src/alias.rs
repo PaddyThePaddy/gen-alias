@@ -1,4 +1,4 @@
-use std::sync::OnceLock;
+use std::{str::FromStr, sync::OnceLock};
 
 use anyhow::Context;
 use clap::ValueEnum;
@@ -18,12 +18,10 @@ pub struct Alias {
     supported_shells: Option<Vec<SupportedShells>>,
 }
 
-impl TryFrom<&str> for Alias {
-    type Error = anyhow::Error;
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let (name, value) = value
-            .split_once('=')
-            .context("No \"=\" in the input string")?;
+impl FromStr for Alias {
+    type Err = anyhow::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let (name, value) = s.split_once('=').context("No \"=\" in the input string")?;
         let (name, supported_shells) = name
             .split_once(':')
             .map(|(n, s)| (n, Some(s)))

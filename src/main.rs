@@ -1,6 +1,7 @@
 use std::{
     io::{BufRead, BufReader},
     path::PathBuf,
+    str::FromStr,
 };
 
 use alias::Alias;
@@ -31,7 +32,7 @@ fn main() -> AnyResult<()> {
     );
     for (idx, line) in reader.lines().enumerate() {
         let line = line.with_context(|| format!("Read string failed at line {idx}"))?;
-        let alias = Alias::try_from(line.as_str())
+        let alias = Alias::from_str(line.as_str())
             .with_context(|| format!("Parse alias from \"{}\" failed", line))?;
         alias.to_script(cli.shell).inspect(|cmd| println!("{cmd}"));
     }
