@@ -32,6 +32,9 @@ fn main() -> AnyResult<()> {
     );
     for (idx, line) in reader.lines().enumerate() {
         let line = line.with_context(|| format!("Read string failed at line {idx}"))?;
+        if line.trim().is_empty() {
+            continue;
+        }
         let alias = Alias::from_str(line.as_str())
             .with_context(|| format!("Parse alias from \"{}\" failed", line))?;
         alias.to_script(cli.shell).inspect(|cmd| println!("{cmd}"));
