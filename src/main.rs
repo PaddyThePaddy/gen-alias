@@ -67,7 +67,7 @@ fn check_cmd_exist(name: &str, shell: SupportedShells) -> AnyResult<bool> {
             .success(),
         SupportedShells::Fish => std::process::Command::new("fish")
             .arg("-c")
-            .arg(format!("type -q {name}"))
+            .arg(format!("abbr --query {name} || type -q {name}"))
             .status()?
             .success(),
     })
