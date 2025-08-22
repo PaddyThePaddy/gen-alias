@@ -12,9 +12,13 @@ fn get_param_pattern() -> &'static Regex {
         .get_or_init(|| Regex::new(r"\$(\d+)").expect("Constructing PARAMETER_PATTERN"))
 }
 
+#[derive(Debug, getset::Getters)]
 pub struct Alias {
+    #[getset(get = "pub")]
     name: String,
+    #[getset(get = "pub")]
     value: String,
+    #[getset(get = "pub")]
     supported_shells: Option<Vec<SupportedShells>>,
 }
 
@@ -51,11 +55,7 @@ impl FromStr for Alias {
 
 impl Alias {
     pub fn to_script(&self, lang: SupportedShells) -> Option<String> {
-        if self
-            .supported_shells
-            .as_ref()
-            .is_some_and(|l| !l.contains(&lang))
-        {
+        if !self.supports(lang) {
             return None;
         }
         Some(match lang {
@@ -90,6 +90,14 @@ impl Alias {
                 )
             }
         })
+    }
+
+    pub fn supports(&self, shell: SupportedShells) -> bool {
+        if let Some(list) = self.supported_shells.as_ref() {
+            list.contains(&shell)
+        } else {
+            true
+        }
     }
 }
 

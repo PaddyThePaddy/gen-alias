@@ -7,4 +7,5 @@ license = "MIT"
 [dependencies]
 anyhow = "1.0.86"
 clap = { version = "4.5.4", features = ["derive"] }
+getset = "0.1.6"
 regex = "1.10.4"
